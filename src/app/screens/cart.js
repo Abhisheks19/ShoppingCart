@@ -7,7 +7,8 @@ class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalPrice: 0
+      totalPrice: 0,
+      taxPercentage: 12.5
     };
     this.cartItems = [];
   }
@@ -25,7 +26,8 @@ class Cart extends Component {
       (total, obj) => obj.price + total,
       0
     );
-    this.setState({ totalPrice: totalAmount.toFixed(2) });
+    const taxAmount = (this.state.taxPercentage / 100) * totalAmount;
+    this.setState({ totalPrice: (totalAmount + taxAmount).toFixed(2) });
   };
 
   render() {

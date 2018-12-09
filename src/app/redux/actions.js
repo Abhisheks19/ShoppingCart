@@ -14,7 +14,7 @@ export const getProductsListSuccess = data => {
 export function getProductsList() {
   return dispatch => {
     axios
-      .get("http://www.mocky.io/v2/5c0bf67f2f0000100013ec83")
+      .get("http://www.mocky.io/v2/5c0d23782f00004c19e2e52b")
       .then(resp => {
         dispatch(getProductsListSuccess(resp.data));
       })
