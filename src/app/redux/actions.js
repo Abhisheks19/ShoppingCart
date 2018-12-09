@@ -1,5 +1,4 @@
 import axios from "axios";
-//import productData from "../data/products.json";
 
 export const ProductList = {
   getProductsListSuccess: "getProductsListSuccess/ProductList"

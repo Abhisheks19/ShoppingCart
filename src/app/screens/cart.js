@@ -7,40 +7,52 @@ class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cartItems: []
+      totalPrice: 0
     };
+    this.cartItems = [];
   }
 
   componentDidMount() {
     this.props.getProductsList();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      cartItems: [].concat(...Array(5).fill(nextProps.productList.productList))
-    });
-  }
+  addToCart = data => {
+    this.cartItems.push(data);
+  };
+
+  calculateCost = () => {
+    const totalAmount = this.cartItems.reduce(
+      (total, obj) => obj.price + total,
+      0
+    );
+    this.setState({ totalPrice: totalAmount.toFixed(2) });
+  };
 
   render() {
     const productList =
       this.props.productList &&
       this.props.productList.productList.map(product => {
-        return <p key={product.id}>{product.title}</p>;
+        return (
+          <React.Fragment key={product.id}>
+            <span>{product.title}</span>
+            <button
+              onClick={() => {
+                this.addToCart(product);
+                this.calculateCost();
+              }}
+            >
+              Add To Cart
+            </button>
+          </React.Fragment>
+        );
       });
-
-    const totalCost = this.state.cartItems.reduce(
-      (total, obj) => obj.price + total,
-      0
-    );
 
     return (
       <React.Fragment>
+        <div>{productList}</div>
         <div>
-          <p>{productList}</p>
-        </div>
-        <div>
-          {/* <h1>Total Amount</h1> */}
-          <h3>{totalCost.toFixed(2)}</h3>
+          <h1>Total Amount</h1>
+          <h3>{this.state.totalPrice}</h3>
         </div>
       </React.Fragment>
     );
