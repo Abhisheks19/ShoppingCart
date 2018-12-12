@@ -21,22 +21,6 @@ describe.only("<Cart />", () => {
     store.clearActions();
   });
 
-  it("Finding the HTML Elements in the component", () => {
-    const props = {};
-
-    const wrapper = mount(
-      <Provider store={store} key="provider">
-        <Cart {...props} />
-      </Provider>
-    );
-
-    expect(wrapper.find("h1").exists()).toBe(true);
-
-    expect(wrapper.find("h3").exists()).toBe(true);
-
-    expect(wrapper.find("div").exists()).toBe(true);
-  });
-
   it("Check Empty Cart and Total Price to be equal to 0", () => {
     const props = {};
 
@@ -117,5 +101,43 @@ describe.only("<Cart />", () => {
     });
 
     expect(wrapper.state("totalPrice")).toEqual(199.95);
+  });
+
+  it("Simulate Add to Cart Button and Adding 8 Dove Soap to the cart", () => {
+    const store = mockStore({
+      productList: {
+        productList: [{ id: 1, title: "Dove Soap", price: 39.99 }]
+      }
+    });
+
+    const wrapper = mount(
+      <Provider store={store} key="provider">
+        <Cart />
+      </Provider>
+    );
+
+    const clickButton = wrapper.find("button");
+
+    clickButton.simulate("click");
+
+    clickButton.simulate("click");
+
+    clickButton.simulate("click");
+
+    clickButton.simulate("click");
+
+    clickButton.simulate("click");
+
+    clickButton.simulate("click");
+
+    clickButton.simulate("click");
+
+    clickButton.simulate("click");
+
+    wrapper.setState({
+      totalPrice: 319.92
+    });
+
+    expect(wrapper.state("totalPrice")).toEqual(319.92);
   });
 });
