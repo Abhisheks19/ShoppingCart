@@ -1,45 +1,80 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
-import Cart from "./cart";
-import { configure } from "enzyme";
+import { shallow, mount, configure } from "enzyme";
+import { Provider } from "react-redux";
 import Adapter from "enzyme-adapter-react-16";
-import renderer from "react-test-renderer";
+import thunk from "redux-thunk";
+import configureStore from "redux-mock-store";
+import Cart from "./cart";
 
 configure({ adapter: new Adapter() });
 
-const setup = props => {
-  const actions = {
-    onCheckoutClicked: jest.fn()
-  };
+const mockStore = configureStore([thunk]);
 
-  const component = shallow(<Cart {...props} />);
+let store;
 
-  return {
-    component: component,
-    span: component.find("span")
-  };
-};
+describe.only("<Cart />", () => {
+  beforeEach(() => {
+    store = mockStore({});
+  });
 
-describe("Cart component", () => {
-  // it("should render title, price, and inventory", () => {
-  //   const { component } = setup({
-  //     productList: {
-  //       id: 1,
-  //       price: 39.99,
-  //       title: "Dove Soap"
-  //     }
-  //   });
-  //   expect(component.span.text()).toMatch("Dove Soap");
-  // });
+  afterEach(() => {
+    store.clearActions();
+  });
 
-  // it('About shows "About"', () => {
-  //   const component = renderer.create(<Cart />);
-  //   const tree = component.toJSON();
-  //   expect(tree).toMatchSnapshot();
-  // });
+  it("Check Empty Shopping Cart and Total Price to be equal to 0", () => {
+    const props = {};
 
-  it("should display total", () => {
-    const { span } = setup("Dove Soap");
-    expect(span.text()).toMatch("Dove Soap");
+    const state = {};
+
+    const wrapper = shallow(
+      <Provider store={store} key="provider">
+        <Cart {...props} {...state} />
+      </Provider>
+    );
+
+    wrapper.setState({
+      totalPrice: 0
+    });
+
+    wrapper.cartItems = [];
+
+    expect(wrapper.state("totalPrice")).toBe(0);
+
+    expect(wrapper.cartItems).toEqual([]);
+  });
+
+  it("Simulate Add to Cart Button and Adding Dove Soap and Axe Deo to the cart", () => {
+    const onClick = jest.fn();
+
+    const store = mockStore({
+      productList: {
+        productList: [
+          { id: 1, title: "Dove Soap", price: 39.99 },
+          { id: 2, title: "Axe Deo", price: 99.99 }
+        ]
+      }
+    });
+
+    const wrapper = mount(
+      <Provider store={store} key="provider">
+        <Cart onClick={onClick} />
+      </Provider>
+    );
+
+    const clickButton = wrapper.find("button");
+
+    clickButton.at(0).simulate("click");
+    clickButton.at(0).simulate("click");
+
+    clickButton.at(1).simulate("click");
+    clickButton.at(1).simulate("click");
+
+    expect(wrapper.find("button").length).toEqual(2);
+
+    wrapper.setState({
+      totalPrice: 314.95
+    });
+
+    expect(wrapper.state("totalPrice")).toEqual(314.95);
   });
 });
