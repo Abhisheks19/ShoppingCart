@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { getProductsList } from "../redux/actions";
-import "../../App.css";
 
 class Cart extends Component {
   constructor(props) {
@@ -18,6 +17,7 @@ class Cart extends Component {
 
   addToCart = data => {
     this.cartItems.push(data);
+    this.calculateCost();
   };
 
   calculateCost = () => {
@@ -25,51 +25,58 @@ class Cart extends Component {
       (total, obj) => obj.price + total,
       0
     );
+
     this.setState({ totalPrice: totalAmount.toFixed(2) });
   };
 
   render() {
-    const productList =
-      this.props.productList &&
-      this.props.productList.productList.map(product => {
+    const { productList } = this.props;
+
+    const { totalPrice } = this.state;
+
+    const productListData =
+      productList &&
+      productList.productList.map(product => {
         return (
-          <React.Fragment key={product.id}>
+          <Fragment key={product.id}>
             <span>{product.title}</span>
+
             <button
+              type="button"
+              className="btnClick"
               onClick={() => {
                 this.addToCart(product);
-                this.calculateCost();
               }}
             >
               Add To Cart
             </button>
-          </React.Fragment>
+          </Fragment>
         );
       });
 
     return (
-      <React.Fragment>
-        <div>{productList}</div>
+      <Fragment>
+        <div>{productListData}</div>
         <div>
           <h1>Total Amount</h1>
-          <h3>{this.state.totalPrice}</h3>
+          <h3>{totalPrice}</h3>
         </div>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
     getProductsList: () => dispatch(getProductsList())
   };
-}
+};
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     productList: state.productList
   };
-}
+};
 
 export default connect(
   mapStateToProps,

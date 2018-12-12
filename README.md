@@ -1,5 +1,18 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Steps to run the Application:
+
+Step 1 : Go to the project directory and install npm by using the command -- npm install
+
+Step 2 : To view the application UI run the command -- npm start
+
+Step 3 : To run the Unit test case run the command -- npm test
+
+# Packages used to write the Unit test case
+
+1. Jest -- Documentaion -- https://jestjs.io/
+2. Enzyme -- Documentation -- https://airbnb.io/enzyme/
+
 ## Available Scripts
 
 In the project directory, you can run:
