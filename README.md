@@ -10,6 +10,11 @@ Step 2 : To view the application UI run the command -- npm start
 
 Step 3 : To run the Unit test case run the command -- npm test
 
+# Packages used to Web Application
+
+1. React -- Documentaion -- https://reactjs.org/
+2. Redux -- Documentation -- https://redux.js.org/basics/usage-with-react
+
 # Packages used to write the Unit test case
 
 1. Jest -- Documentaion -- https://jestjs.io/
