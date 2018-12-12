@@ -1,3 +1,5 @@
+# Coding challenge version number 78d7829462b6615e7c3b39157bcb54d47fb00ba2
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Steps to run the Application:
@@ -7,6 +9,11 @@ Step 1 : Go to the project directory and install npm by using the command -- npm
 Step 2 : To view the application UI run the command -- npm start
 
 Step 3 : To run the Unit test case run the command -- npm test
+
+# Packages used to Web Application
+
+1. React -- Documentaion -- https://reactjs.org/
+2. Redux -- Documentation -- https://redux.js.org/basics/usage-with-react
 
 # Packages used to write the Unit test case
 
