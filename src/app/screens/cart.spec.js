@@ -37,7 +37,7 @@ describe.only("<Cart />", () => {
     expect(wrapper.find("div").exists()).toBe(true);
   });
 
-  it("Check Empty Cart and Total Price to be equal to 0", () => {
+  it("Check Empty Shopping Cart and Total Price to be equal to 0", () => {
     const props = {};
 
     const state = {};
