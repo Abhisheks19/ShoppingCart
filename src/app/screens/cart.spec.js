@@ -21,7 +21,7 @@ describe.only("<Cart />", () => {
     store.clearActions();
   });
 
-  it("Check Empty Cart and Total Price to be equal to 0", () => {
+  it("Check Empty Shoppoing Cart and Total Price to be equal to 0", () => {
     const props = {};
 
     const state = {};
